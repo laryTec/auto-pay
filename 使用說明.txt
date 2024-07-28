@@ -1,0 +1,25 @@
+2022/8/31 新增支援藍新&綠界
+			藍新=>ATM轉帳,超商代碼付款,信用卡一次付清
+			綠界=>ATM轉帳,超商代碼付款
+
+1.將DB_autopay.sql掛上伺服器
+
+2.在include/config.php 裡修改對應設定 預設是綠界測試帳號
+	A.Pay_Vender 設定ECpay:綠界 , newebpay:藍新
+	B.MerchantID,HashKey,HashIV 改成自己的資料後記得將 綠界測試服務位置&藍新測試服務位置 註解掉 改成 綠界服務位置&藍新服務位置
+	C.$serverarr 改成登入要顯示的名字 , 72new 改成遊戲DB名
+	D.hosturl 改成自己的自動贊助的網址即可
+	
+3.在include/dbconfig.php 裡修改對應設定 GameDB開頭的都是對應遊戲DB ,PayDB 對應自動贊助DB
+
+4.pay.php & pay_newebpay.php中有比值表 可以設定 19~23行 , 畫面上顯示的部分在111~125行 必須對應修改
+	pay.php=>綠界
+	pay_newebpay.php=>藍星  不開信用卡請自行將sele_way 中的 <option value="3">信用卡</option> 刪除
+
+5.adm/login.php 第11行 $_POST["pwd"] == "00000000"  把00000000 改成自己記得的密碼. 這個是管理員後台登入密碼
+
+6.管理員後台登入網址 => 你的網址/adm
+
+7.僅支援寫入至ezpay 寫入欄位 ordernumber,amount,payname,state 欄位不同請自行調整writeToGameDB.php 28行 ,adm中也有writeToGameDB.php 必須對應調整
+
+
